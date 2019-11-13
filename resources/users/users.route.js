@@ -10,8 +10,6 @@ router.route("/")
 .post(Users.create)
 .get(verify.verifyOrdinaryUser,Users.find)
 
-// .get(verify.verifyOrdinaryUser,Users.find)
-
 router.route("/login")
 .post(Auth.login)
 

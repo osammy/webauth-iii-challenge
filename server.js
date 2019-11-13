@@ -9,14 +9,14 @@ app.use(resources);
 
 
 
-app.use((err,req,res) => {
+app.use((err,req,res,next) => {
     const {status,message} = err;
-    console.log("error handler caught this")
+    console.log(typeof status)
 
-    // res.json({
-    //     status,
-    //     message
-    // })
+    res.json({
+        status,
+        message
+    })
 })
 
 module.exports = app;
