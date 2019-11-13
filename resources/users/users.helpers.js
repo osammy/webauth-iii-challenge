@@ -3,8 +3,12 @@ const Users = require("./users.model");
 const asyncMiddleware = require("../../asyncMiddleware");
 
 async function find(req,res) {
-       const users = await Users.find();
+       // console.log("ina this ---> ")
+       const department = req.decoded.department;
+       const users = await Users.find({department});
+       console.log("userstop");
        res.json(users);
+       // res.json({m:"yes"})
 }
 
 async function create(req,res) {

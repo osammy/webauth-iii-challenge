@@ -1,7 +1,8 @@
 const Users = require("./resources/users/users.model");
 const bcrypt = require("bcryptjs");
+const verify = require("./verify");
 
-const register = async (req, res) => {
+const register = async (req, res,next) => {
     console.log("in here now!")
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
@@ -17,21 +18,19 @@ const register = async (req, res) => {
 
 const login = async (req, res,next) => {
   let { username, password } = req.body;
-
   try {
     const user = await Users.find({ username }).first()
 
     if (user && bcrypt.compareSync(password, user.password)) {
-      // if creds good, stuff a thing inside req.session
-      // which will be there when other endpoints are hit
-      // by the same client
-      req.session.user = user;
+      const {id} = user;
+      const token = verify.getToken(user,'1d');
       res.status(200).json({
-        message: `Welcome ${user.username}!`
+        id,
+        token,
       });
-    } else {
-      res.status(401).json({ message: "Invalid Credentials" });
-    }
+    } 
+    else res.status(401).json({ message: "Invalid Credentials" });
+    
   } catch(e) {
     next({status:500,message:"Login failed, "+e.message})
   }

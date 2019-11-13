@@ -7,11 +7,9 @@ class Generate {
     }
 
     find(query) {
-        console.log("query ----> ",query)
         if(!query) return this.db;
 
         return this.db
-        // .select('id', 'username')
         .where(query);
     }
 

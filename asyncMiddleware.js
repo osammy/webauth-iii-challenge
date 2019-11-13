@@ -1,6 +1,6 @@
 const asyncMiddleware = fn =>
   (req, res, next) => {
-    
+    console.log("async called")
     const modifiedNext = e => next({status:500,message:`Operation failed, ${e.message}`});
 
     Promise

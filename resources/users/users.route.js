@@ -2,13 +2,15 @@ const express = require('express');
 
 const Users = require('./users.helpers');
 const Auth = require("../../authController");
-const validate = require("../../validate");
+const verify = require("../../verify");
 
 const router = express.Router();
 
 router.route("/")
 .post(Users.create)
-.get(validate,Users.find)
+.get(verify.verifyOrdinaryUser,Users.find)
+
+// .get(verify.verifyOrdinaryUser,Users.find)
 
 router.route("/login")
 .post(Auth.login)
